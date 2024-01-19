@@ -50,7 +50,7 @@ def edit_corpus(args):
         with open("stopwords.txt") as f:
             stopwords = f.read().splitlines()
             stopwords = set(stopwords)
-        tokens = [tok for tok in text.lower().split() if tok.lower() not in stopwords]
+        tokens = [tok for tok in text.split() if tok.lower() not in stopwords]
         text = ' '.join(tokens)
 
     # Stems words using Porter Stemmer
