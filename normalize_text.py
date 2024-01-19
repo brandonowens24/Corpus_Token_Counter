@@ -97,6 +97,7 @@ def histogram(appended_count_list, total_wc):
 
 if __name__ == "__main__":
     args = from_arguments()
+    print("Normalizing Text...")
     polished_tokens = edit_corpus(args)
     appended_count_list, total_wc = determine_counts(polished_tokens, args)
     histogram(appended_count_list, total_wc)
