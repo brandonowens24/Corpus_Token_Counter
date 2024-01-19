@@ -12,6 +12,7 @@
 ## Instructions
 * Install necessary requirements found in `requirements.txt` into your environment <br>
 * `$ python normalize_text.py myfile.txt --arguments` <br>
+  * **Recommended: Use `--lower` argument**
   * **myfile.txt can be replaced with any utf-8 text file of your liking**
     *   Either replace text in the myfile.txt
     *   Insert your own utf-8 .txt file and use on the command line
