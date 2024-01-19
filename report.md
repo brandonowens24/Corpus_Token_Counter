@@ -33,15 +33,15 @@
 
 ### Top 10: Most Frequent Tokens from Sample Text
 **With Stop Words** - `$ python normalize_text.py myfile.txt -l`
-![Top 10 w/ Stop Words]()
+![Top 10 w/ Stop Words](https://github.com/brandonowens24/NLP_HW0/blob/main/images/top_ten_w_sw.png)
 
 **Without Stop Word and with Contraction Splitting** - `$ python normalize_text.py myfile.txt -lw`
 
-![Top 10]()
+![Top 10](https://github.com/brandonowens24/NLP_HW0/blob/main/images/top_ten_wout_sw.png)
 
 ### Bottom 10: Least Frequented Tokens from Sample Text
 `$ python normalize_text.py myfile.txt -lwr`
-![Bottom 10]()
+![Bottom 10](https://github.com/brandonowens24/NLP_HW0/blob/main/images/bottom_ten.png)
 
 # DISCUSSION
 
