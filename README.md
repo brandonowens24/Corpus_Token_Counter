@@ -21,8 +21,8 @@
 ## Arguments
 * `'-h' '--help'` Argument help <br>
 * `'-l' '--lower'` Converts corpus to lowercase. IGNORES CASE <br>
-* `'-s' '--stem'` Stems corpus to root word use nltk Port Stemmer<br>
+* `'-s' '--stem'` Stems corpus to root word using nltk Port Stemmer<br>
 * `'-p' '--punctuation'` Punctuation is automatically removed from the text. This command reinstates punctuation as tokens <br>
 * `'-w' '--stopwords'` Removes stop words from the corpus <br>
 * `'-c' '--contractions'` Splits contractions into their respective parts <br>
-* `'-r' '--reverse'` Gives least frequently used tokens instead of most frequent.
+* `'-r' '--reverse'` Gives least frequently used tokens instead of most frequently used.
