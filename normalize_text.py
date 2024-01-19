@@ -38,7 +38,7 @@ def edit_corpus(args):
         contraction_dict = {"'m": "am", "'ll": "will", "'d": "would", "'ve": "have", "'re": "are", "'s": "is", "n't": "not"}
 
         for contraction, fullword in contraction_dict.items():
-            text = text.replace(contraction.lower(), ' ' + fullword)
+            text = text.replace(contraction, ' ' + fullword)
 
     # Space out text for argument manipulation
     tokens = re.findall(r'[\w\']+|[^\s\w]+', text)
@@ -50,13 +50,13 @@ def edit_corpus(args):
         with open("stopwords.txt") as f:
             stopwords = f.read().splitlines()
             stopwords = set(stopwords)
-        tokens = [tok for tok in text.lower().split() if tok not in stopwords]
+        tokens = [tok for tok in text.lower().split() if tok.lower() not in stopwords]
         text = ' '.join(tokens)
 
     # Stems words using Porter Stemmer
     if args.stem:
         stemmer = PorterStemmer()
-        tokens = text.lower().split()
+        tokens = text.split()
         stemmed_tokens = [stemmer.stem(plural) for plural in tokens]
         text = ' '.join(stemmed_tokens)   
 
