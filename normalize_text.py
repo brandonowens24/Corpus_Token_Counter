@@ -1,6 +1,8 @@
 import argparse, re
 from nltk.stem import PorterStemmer
 import plotly.express as px
+import pandas as pd
+import numpy as np
 
 N = 10
 
@@ -14,6 +16,7 @@ def from_arguments():
     parser.add_argument("-p", "--punctuation", action="store_false", help="Punctuation and special characters are automatically removed. This command reinstates punctuation while creating tokens")
     parser.add_argument("-w", "--stopwords", action="store_true", help="Removes stop-words from text")
     parser.add_argument("-c", "--contractions", action="store_true", help="Splits contractions into their respective parts")
+    parser.add_argument("-i", "--individual", action="store_true", help="Gives a plot with the top 10 most used tokens on the x-axis and their frequencies on the y-axis")
     parser.add_argument("-r", "--reverse", action="store_false", help="Gives the last N most common tokens from the text file")
     args = parser.parse_args()
 
@@ -78,15 +81,32 @@ def determine_counts(tokens, args):
     total_wc = len(tokens)
     counts = dict((x, tokens.count(x)) for x in set(tokens))
     sorted_counts = dict(sorted(counts.items(), reverse=args.reverse, key=lambda item: item[1]))
-    appended_count_list = {k: sorted_counts[k] for k in list(sorted_counts)[:N]}
+    count_list = {k: sorted_counts[k] for k in list(sorted_counts)}
 
-    for key, value in appended_count_list.items():
+    for key, value in list(count_list.items())[:N]:
         print(f'{key:<15}{value}')
 
-    return appended_count_list, total_wc
+    return count_list, total_wc
 
 # OpenAI Helped to Create Histogram Code. X axis is token. Y axis is count.
-def histogram(appended_count_list, total_wc):
+def histogram(count_list, total_wc):
+    df = pd.DataFrame(list(count_list.items()), columns=['Tokens', 'Counts'])
+    df['Token_Bins'] = pd.cut(df.index, bins=np.arange(-1, len(df)+100, 100), labels=False)
+
+    grouped_df = df.groupby('Token_Bins').sum()
+    grouped_df['Frequency (log2)'] = np.log2(df['Counts'])
+    bin_ranges = [f'{i}-{i+99}' for i in range(1, len(grouped_df)*100, 100)] 
+
+
+    fig = px.bar(grouped_df, x=bin_ranges, y='Frequency (log2)', labels={'x': '<b> Most Frequent Token Rankings </b>', 'y': '<b> Frequency Count (log2) </b>'}, title='<b>Frequency of Top Ranking Tokens')
+    fig.update_layout(title_x=0.5, xaxis_title_standoff=80)
+    fig.add_annotation(text=f'<b>Total Normalized Token Count = {total_wc} </b>', xref='paper', yref='paper', x=1, y=1,showarrow=False, font=dict(size=12))
+    fig.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
+    fig.show()
+
+# OpenAI Helped to Create Histogram Code. X axis is token. Y axis is count.
+def ind_histogram(count_list, total_wc):
+    appended_count_list = {k: count_list[k] for k in list(count_list)[:N]}
     tokens = list(appended_count_list.keys())
     counts = list(appended_count_list.values())
     fig = px.bar(x=tokens, y=counts, labels={'x': '<b>Token</b>', 'y': '<b>Counts</b>'}, text_auto="1f", title='<b>Token Counts via Text File</b>')
@@ -99,5 +119,8 @@ if __name__ == "__main__":
     args = from_arguments()
     print("Normalizing Text...")
     polished_tokens = edit_corpus(args)
-    appended_count_list, total_wc = determine_counts(polished_tokens, args)
-    histogram(appended_count_list, total_wc)
+    count_list, total_wc = determine_counts(polished_tokens, args)
+    if args.individual:
+        ind_histogram(count_list, total_wc)
+    else:
+        histogram(count_list, total_wc)

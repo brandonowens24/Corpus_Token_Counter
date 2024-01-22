@@ -31,21 +31,27 @@
       
 # SAMPLE OUTPUT
 
-### Top 10: Most Frequent Tokens from Sample Text
-**With Stop Words** - `$ python normalize_text.py myfile.txt -l`
+### Bucket Distribution
+`$ python normalize_text.py myfile.txt -lcs`
+![Top Occurring Tokens Bucketed by Ranking vs. Frequency](https://github.com/brandonowens24/NLP_HW0/blob/main/images/full_rank.png)
+
+### Individual Top 10: Most Frequent Tokens from Sample Text
+**With Stop Words** - `$ python normalize_text.py myfile.txt -li`
 ![Top 10 w/ Stop Words](https://github.com/brandonowens24/NLP_HW0/blob/main/images/top_ten_w_sw.png)
 
-**Without Stop Word and with Contraction Splitting** - `$ python normalize_text.py myfile.txt -lw`
+**Without Stop Word and with Contraction Splitting** - `$ python normalize_text.py myfile.txt -lwi`
 
 ![Top 10](https://github.com/brandonowens24/NLP_HW0/blob/main/images/top_ten_wout_sw.png)
 
-### Bottom 10: Least Frequented Tokens from Sample Text
-`$ python normalize_text.py myfile.txt -lwr`
+### Individual Bottom 10: Least Frequented Tokens from Sample Text
+`$ python normalize_text.py myfile.txt -lwri`
 ![Bottom 10](https://github.com/brandonowens24/NLP_HW0/blob/main/images/bottom_ten.png)
 
 # DISCUSSION
 
 ### Part One
+While looking at the most frequenlty occurring tokens ranked in order and bucketed via 100 tokens, I was surprised by the lack of decay. I was fully expecting the top 100 tokens to contain a ton of stopwords that would drastically outnumber other words. When I was working on the plotting, I fiddled with changing the buckets to include only ten tokens per bucket, and there was a more visible exponential decay distribution. When the individual words are noted, this finding accentuates even more. <br>
+
 Originally, upon using my program with just the lowercase parameter, all top ten words were stop words. After adjusting for this and using my stop word argument, a majority of the top ten words (for multiple texts) became nouns! This was surprising, as I was expecting that the removal of the stopword parameter would cause there to be a large amount of verbs; however, upon thought it makes sense because usually the repetition of descriptive words and actions wears them out. Meanwhile, the bottom words on my list just happened to be ten tokens that were only used a single time. There were plenty more tokens that were also only used a single time -- however, the program only selected ten of them so these words could have been different. With that being said, these words, for the most part, are either unique verbs or adjectives.<br>
 
 Compared to Zipf's law (stating that the most common word occurs about n times the nth most common one), my sample text doesn't really follow this sentiment with the inclusion of stopwords. Instead it almost looks like the top ten words are linearly decreasing. If I increase the parameter of tokens to be read to be higher, I wonder if this would model more accurate. With the exclusion of stopwords, the histogram looks more like an exponential function, however, after n equals about 4, it levels off. This may be because my sample text was written in the third person and the main character's name is said an extremely large amount of times -- skewing the data. Deviations from Zipf's laws are said to occur with unique language instances, which may be occurring here since my sample text was written from a Canadian author in the 1920s.<br>

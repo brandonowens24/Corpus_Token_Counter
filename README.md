@@ -1,5 +1,5 @@
 # Counting_Tokens_HW0
-**Input a utf8 standard text file of your choice and insert arguments in order to find the top ten most frequently occurring normalized tokens within the corpus.**
+**Input a utf8 standard text file of your choice and insert arguments in order to find a distribution of the frequency of the top occurring tokens from your corpus.**
 
 ## Files / Folders
 * **requirements.txt** - Contains necessary packages to run script
@@ -16,7 +16,7 @@
     *   Either replace text in the myfile.txt
     *   Insert your own utf-8 .txt file and use on the command line
   * Current example myfile.txt is *The Blue Castle* by L.M. Montgomery
-* This should produce a bar plot with the **top 10** token counts. <br>
+* This should produce a bar plot containing buckets of 100 tokens ranked by their order in the text and the summation of their occurrence. <br>
 
 ## Arguments
 * `'-h' '--help'` Argument help <br>
@@ -25,4 +25,5 @@
 * `'-p' '--punctuation'` Punctuation is automatically removed from the text. This command reinstates punctuation as tokens <br>
 * `'-w' '--stopwords'` Removes stop words from the corpus <br>
 * `'-c' '--contractions'` Splits contractions into their respective parts <br>
+* `'-i' '--individual'` Produces a bar plot of the top 10 individually most frequently occurring tokens in order <br>
 * `'-r' '--reverse'` Gives least frequently used tokens instead of most frequently used.
