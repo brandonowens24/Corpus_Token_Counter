@@ -91,14 +91,13 @@ def determine_counts(tokens, args):
 # OpenAI Helped to Create Histogram Code. X axis is token. Y axis is count.
 def histogram(count_list, total_wc):
     df = pd.DataFrame(list(count_list.items()), columns=['Tokens', 'Counts'])
-    df['Token_Bins'] = pd.cut(df.index, bins=np.arange(-1, len(df)+100, 100), labels=False)
+    df['Token_Bins'] = pd.cut(df.index, bins=np.arange(-1, len(df), 100), labels=False)
 
-    grouped_df = df.groupby('Token_Bins').sum()
-    grouped_df['Frequency (log2)'] = np.log2(df['Counts'])
+    grouped_df = df.groupby('Token_Bins').agg({'Counts': 'sum'}).reset_index()
+    grouped_df['Counts (log10)'] = grouped_df['Counts'].transform(lambda x: np.log10(x))
     bin_ranges = [f'{i}-{i+99}' for i in range(1, len(grouped_df)*100, 100)] 
 
-
-    fig = px.bar(grouped_df, x=bin_ranges, y='Frequency (log2)', labels={'x': '<b> Most Frequent Token Rankings </b>', 'y': '<b> Frequency Count (log2) </b>'}, title='<b>Frequency of Top Ranking Tokens')
+    fig = px.bar(grouped_df, x=bin_ranges, y='Counts (log10)', labels={'y': '<b> Counts (log10)</b>', 'x': '<b> Most Frequent Token Rankings </b>'}, title='<b>Frequency of Top Ranking Tokens')
     fig.update_layout(title_x=0.5, xaxis_title_standoff=80)
     fig.add_annotation(text=f'<b>Total Normalized Token Count = {total_wc} </b>', xref='paper', yref='paper', x=1, y=1,showarrow=False, font=dict(size=12))
     fig.update_traces(textfont_size=12, textangle=0, textposition="outside", cliponaxis=False)
