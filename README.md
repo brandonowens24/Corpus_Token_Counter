@@ -25,5 +25,5 @@
 * `'-p' '--punctuation'` Punctuation is automatically removed from the text. This command reinstates punctuation as tokens <br>
 * `'-w' '--stopwords'` Removes stop words from the corpus <br>
 * `'-c' '--contractions'` Splits contractions into their respective parts <br>
-* `'-i' '--individual'` Produces a bar plot of the top 10 individually most frequently occurring tokens in order <br>
+* `'-i' '--individual'` Produces a bar plot of the individual top 10 occurring tokens in order <br>
 * `'-r' '--reverse'` Gives least frequently used tokens instead of most frequently used.
